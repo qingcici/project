@@ -15,11 +15,26 @@
   - `git`可以保证数据的完整性，具有断点续传功能。
   - **缺点**：入门稍微有点麻烦；图形化操作界面不及svn那么好用 
 
--  ##### 基本操作：（[廖雪峰网站](https://www.liaoxuefeng.com/wiki/896043488029600)）
+- ##### 基本操作：（[廖雪峰网站](https://www.liaoxuefeng.com/wiki/896043488029600)）
 
-   - 创建版本库。创建一个空目录后，通过 `git init`命令把这个目录变成git可以管理的仓库。
+   - 首先查看是否有git,尝试输入git，如果没有的话详细[git安装](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137396287703354d8c6c01c904c7d9ff056ae23da865a000)
 
-   - 添加文件。在此目录下新建文件，提交文件。
+   - **创建版本库**
+
+      ```
+      pwd 
+      （这个目录就是git的仓库，一切在此目录下操作）
+      git init 
+      （初始化仓库，把它变成git可以管理的仓库）
+      git add   test.txt
+      （把文件添加到仓库。可以提交多个，中间有空格就可以）
+      git commit -m ' commit test.txt'
+      （把文件提交到仓库，并且加上注释）
+      git status
+      （查看仓库状态）
+      ```
+
+   - **添加文件**。在此目录下新建文件，提交文件。
 
      ``` 
      git  add  test.txt
@@ -31,17 +46,64 @@
      git commit -m 'delete'  		
      ```
 
+   - **修改**
+
+   ```
+   假设修改了已提交的test.txt文件
+   git status 会告诉我们，文件已经被修改过了，那么，如何查看修改了那些内容
+   
+   git diff  test.txt 
+   （查看修改了哪些内容，然后没有问题放心提交）
+   git add test.txt
+   git commit  -m 'add again'
+   git status 
+   ```
+   - **版本回退**
+
+   ```
+   git log  或者 git log --pretty=online
+   （查看提交历史记录）
+   git  reflog 
+   (查看命令历史)
+   git reset  --hard  HEAD^
+   (回退到上一个版本，HEAD指的是当前版本，HEAD^是上一个，以此类推，上一百个是HEAD~100)
+   
+   git reset --hard 1094a 
+   （版本号，回到未来的某个版本）
+   git reset  HEAD  file 
+   还可以把暂存区的修改撤销掉，重新放回工作区
+   ```
+   **git  管理的是修改，不是文件**
+   - 撤销修改
+
+   ```
+   git  checkout -- file
+   可以丢弃工作区的修改，让这个文件回到最近一次 git add 和git commit 的状态
+   ```
+   - 删除文件
+
+   ```
+   删除了一个文件后，git status 会报出哪些文件删除
+   如果确认删除   git rm  file , git  commit
+   如果删错了 可以用git checkout -- file  ，因为版本库里还有，可以恢复到最新版本
+   ```
+   - 远程仓库
+
+   ```
+   1.创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：
+   ssh-keygen -t rsa -C "2595817157@qq.com"
+   
+   ```
+
    - 推送到远程仓库。[连接远程仓库](https://www.liaoxuefeng.com/wiki/896043488029600/896954117292416)
 
    ```
-   git  branch					查看分支
-   git checkout				切换分支
+   it  branch					查看分支
+   it checkout				切换分支
    指定分支后推送
-   git  pull 					
-   git  push					上传
+   it  pull 					
+   it  push					上传
    ```
-
-   
 
 
 
